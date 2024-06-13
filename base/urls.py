@@ -13,8 +13,12 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),   
     path('registrations/signup.html', authView,name='signup'),
     path('community/', views.community, name='community'), 
+    path('developer/', views.developer, name='developer'), 
     path('messages/', messages_view, name='messages'), #messages url connected siya sa view.py yung messages_view
     path('homemessages/', messages_home, name='messageshome'),
-   
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('create_post/', views.create_post, name='create_post'),
+    path('user/<str:username>/', views.user_posts, name='user_posts'),
+    path('timeline/', views.timeline, name='timeline'),
+    path('timeline-home/', views.timelinehome, name='timelinehome'),
 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

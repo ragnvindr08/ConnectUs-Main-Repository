@@ -11,7 +11,7 @@
 <style>
 
   body {
-    background-color: #efefef; /* Changed to white */
+    background-color: #1e1e1e ; /* Changed to white */
     padding-top: 80px;
     margin: 60px;
     margin-left: 160px; /* Same as the width of the sidenav */
@@ -26,7 +26,7 @@
   }
   
   body.dark-mode {
-    background-color: #1e1e1e; /* Dark background */
+    background-color: #efefef; /* Dark background */
     color: #ffffff; /* White text color */
   }
 
@@ -118,9 +118,52 @@
   text-decoration: none;
  }
 
+ .message-details {
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
 
+.message-details h3 {
+  margin-top: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.message-details p {
+  margin-bottom: 5px;
+}
+
+.delete-form {
+  display: inline-block;
+}
+
+.delete-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background-color: #c0392b;
+}
+ 
+.bgm{
+  margin-top: -430px;
+  background: linear-gradient(90deg, rgba(114,121,125,0.4780287114845938) 8%, rgba(170,101,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-top: 550px;
+  border-radius: 20px;
+}
 </style>   
-
+<body>
+  
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"> <!--top nav bar ito-->
     <a  class="navbar-brand" href=""><img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,7 +172,7 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav"> <!-- Added justify-content-end class -->
       <ul style="font-size:15px;" class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" href='/home/'>Home</a>
+          <a class="nav-link" href="http://127.0.0.1:8000/">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Settings</a>
@@ -140,29 +183,27 @@
       </ul>
       <div class="custom-control custom-switch ml-lg-2"> <!-- Added ml-lg-2 class for margin -->
         <input type="checkbox" class="custom-control-input" id="darkModeSwitch">
-        <label class="custom-control-label" for="darkModeSwitch">Dark Mode</label>
+        <label class="custom-control-label" for="darkModeSwitch">Light Mode</label>
       </div>
       
     </div>
   </nav>
-    <div class="sidenav"> 
-        <a href="#about">Developers</a>
-        <a href="#services">Connections</a>
-        <a href="#clients">News and Updates</a>
-        <a href="/community/">Community</a>
-        <a href="#clients">Friends</a>
-        <a href="/messages/">Messages</a>
-        <a href="#clients">Privacy</a>
-        <a href="#contact">About</a>
-        <a href="#clients">Settings</a>
-        
-      </div>
+
+  <div class="sidenav"> 
+    <a href="http://127.0.0.1:8000/">Home</a>
+    <a href="/developer/">Developers</a>
+    <a href="/timeline/">Timeline</a>
+    <a href="/community/">Community</a>
+    <a href="/messages/">Messages</a>
+    <a href="/create_post/">Post Timeline</a> 
+  </div>
+  
       <div class="message">    
         <div class="gradient-text">
           <h4>Welcome, {{ user.username }} <img style="width:20px; height;20px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"> </h4>  <!--base.html nakakonek-->
         </div>
 
-
+<div class="bgm">
 <h1 style="margin-top:-500px;">Send Message</h1>
     {% if messages %}
       <ul>
@@ -172,39 +213,42 @@
        </ul>
     {% endif %}
 
-<h2>Received Messages</h2>
-  <div class="card card-body" style="overflow: auto; max-height: 400px;">
-    {% if received_messages %}
-     <ul>
-      <div>
+    <h2>Received Messages</h2>
+    <div class="card card-body" style="overflow: auto; max-height: 400px;">
+      {% if received_messages %}
+      <ul>
         {% for message in received_messages %}
         <div style="padding:10px; margin-bottom:10px; border-radius:40px; background: linear-gradient(90deg, rgba(114,121,125,0.4780287114845938) 8%, rgba(170,101,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);">
-         <p>@{{ message.sender.username }}<img style="width:15px; height;15px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"></p>
-         <p style="font-size: 80%;">Message: {{ message.content }}</p>
+          <p>@{{ message.sender.username }}{% if message.sender == request.user %}<img style="width:15px; height;15px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon">{% endif %}</p>
+          
+          <p style="font-size: 80%;">Message: {{ message.content }}</p>
+          <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="message_id" value="{{ message.id }}">
+            <button style="margin-left: 20px; background-color: rgba(43, 43, 43, 0.9); color: white; border-radius: 5px;" type="submit" name="delete_message">Delete</button>
+          </form>
         </div>
-                <!-- Add any additional fields you want to display -->
         {% endfor %}
-      </div>  
-     </ul>
+      </ul>
+      {% else %}
+      <p>No messages received.</p>
+      {% endif %}
     </div>
- </div>
+
+
+<div class="message1">
+  <form method="post">
+    {% csrf_token %}
+    <div><label for="receiver">To: Username</label><img style="width:15px; height;15px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"></div>
+    <input type="text" name="receiver" id="receiver" value=""> <br>
+    <label for="content">Message:</label>
+    <textarea name="content" id="content"></textarea>
+    <br>
+    <button style="background: linear-gradient(90deg, rgba(98,172,214,0.7609418767507002) 8%, rgba(101,146,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);" type="submit">Send</button>
     
-    {% else %}
-        <p>No messages received.</p>
-    {% endif %}
-
+    <img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus">
+  </form>
 </div>
-</div>
-
-<div stl class="message1">
-    <form method="post">
-        {% csrf_token %}
-        <div><label for="receiver">To: Username</label><img style="width:15px; height;15px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"></div>
-        <input type="text" name="receiver" id="receiver" value=""> <br>
-        <label for="content">Message:</label>
-        <textarea name="content" id="content"></textarea> <br>
-        <button style="background: linear-gradient(90deg, rgba(98,172,214,0.7609418767507002) 8%, rgba(101,146,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);" type="submit">Send </button><img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus">
-    </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -215,6 +259,8 @@
   darkModeSwitch.addEventListener('change', () => {
     document.body.classList.toggle('dark-mode');
   });
+
+  
 </script>
 
 
@@ -223,6 +269,8 @@
 <div class="log-out">  
   <a href="{% url 'base:logout' %}" style="position: fixed; color: white; background-image: linear-gradient(to right, #0c0c14, black); text-decoration: none; padding: 10px 20px; border-radius: 5px; transition: color 0.3s, background-color 0.3s;" onmouseover="this.style.color='red'; this.style.backgroundColor='white'" onmouseout="this.style.color='white'; this.style.backgroundColor='transparent'">User Out</a>
 </div>
+
+
 {% endblock content %}
 
 </body>

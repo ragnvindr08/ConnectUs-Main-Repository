@@ -1,8 +1,9 @@
 
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Connectus</title>
+  <title>Community</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   
@@ -11,15 +12,16 @@
 <body>
 
   <style>
-
-    
+    body{
+      background: linear-gradient(to right, #5f2c82, #49a09d);
+    }
     .search-bar {
-      position: fixed;
-      top: 15%; /* Center vertically */
-      left: 50%; /* Center horizontally */
-      transform: translate(-50%, -50%); /* Offset by 50% of the width and height 
+      position: absolute;
+      top: 94%; /* Adjust the top position as needed */
+      left: 33%;
+      transform: translateX(-50%);
       background-color: #2b2b2b;
-      padding: 20px ; /* Long padding on left and right */
+      padding: 10px 5px ; /* Long padding on left and right */
       width: 100%;
       max-width: 550px; /* Limiting the maximum width */
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -32,11 +34,6 @@
       
     
   }
-
-  .search-bar.hidden {
-    transform: translate(-50%, -100%); /* Move out of view */
-    opacity: 0;
-}
 
   /* Styles for the input */
   .search-bar input[type="text"] {
@@ -73,7 +70,6 @@
     box-shadow: 5px 5px 3px 3px rgba(0, 0, 0, 0.9);
     padding-bottom:-20px;
     filter: grayscale(30%);
-    border-radius: 10px;
 }
 
   .slide {
@@ -336,83 +332,96 @@ box-shadow: 2px 2px 2px 2px black;
 }
 }
 
-.iframe-container {
+.container {
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  padding: 20px;
+  margin: 50px auto;
+  width: 100%;
   border-radius: 10px;
-  box-shadow: 1px 1px 1px 1px black;
   position: relative;
-  width: 60%;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
-  margin-right:20px;
-  margin-top: 5%;
-}
-.iframe-container iframe {
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
-.hr-container {
-  top: 5%;
-  position: absolute;
-  width: 100%;
-  text-align: center;
+  overflow: hidden;
 }
 
-.gradient-hr {
-  box-shadow: 2px 2px 2px 2px black;
-  height: 100px;
-  width: 100%;
-  background: linear-gradient(to right, grey, grey, lightblue,lightblue, grey);
-  background-size: 200% 100%;
-  animation: gradient-animation 8s linear infinite;
+.container::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  z-index: -1;
+  background: radial-gradient(circle, rgba(43, 37, 39, 1) 49%, rgba(18, 18, 17, 1) 100%);
+  border-radius: 20%;
+  animation: rotate-gradient 8s linear infinite;
 }
 
-@keyframes gradient-animation {
+@keyframes rotate-gradient {
   0% {
-      background-position: 0 0;
+    transform: rotate(0deg);
   }
   100% {
-      background-position: 200% 0;
+    transform: rotate(360deg);
   }
 }
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  margin-bottom: 10px;
+}
 
+.social-icons {
+  margin-left: 16%;
+  align-items: center;
+  justify-content: center;
+}
+.social-icons a {
+  display: inline-block;
+  margin: 0 10px; /* Adjust as needed */
+  text-decoration: none;
+  color: #000; /* Adjust as needed */
+}
+.social-icons a img {
+  width: 30px; /* Adjust as needed */
+  height: auto;
+}
 </style>
   <body>
+   
+<div>
     
-    <div class="hr-container">
-
-      <hr class="gradient-hr">
-  </div>
-  
-    <div class="iframe-container">
-      
-        <iframe src="timeline-home/" frameborder="0"></iframe>
+    
+  <div class="container">
+    <h2>Connect Us Developers</h2>
+    <ul>
+        <li>Caspe, John Steven I.</li>
+        <li>Lord, Justin Reigh T. Bernal</li>
+        <li>Mamansag, Alen James V.</li>
+        <li>Lecaros, Brix</li>
+        <li>Cabantog, Taliza</li>
+        <li>Orozco, Rhosley Arman</li>
+    </ul>  
+    <div class="social-icons">
+      <a href="https://www.facebook.com"><img src="/static/css/images/facebook.svg" alt="Facebook"></a>
+      <a href="https://www.instagram.com"><img src="/static/css/images/instagram.svg" alt="Instagram"></a>
+      <a href="https://github.com"><img src="/static/css/images/github.svg" alt="GitHub"></a>
+      <a href="#"><img src="/static/css/images/google.svg" alt="Google Sign In"></a>
     </div>
-
-
+  </div>
+  <div class="footer">
+    &copy; ConnectUs
+  </div>
     
     <body>
 
     
       <script>
-
-        let lastScrollTop = 0;
-        const searchBar = document.getElementById('searchBar');
-    
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-            if (scrollTop > lastScrollTop) {
-                // Scrolling down
-                searchBar.classList.add('hidden');
-            } else {
-                // Scrolling up
-                searchBar.classList.remove('hidden');
-            }
-            lastScrollTop = scrollTop;
-        });
      
         var slideIndex = 0;
         showSlides();
@@ -432,7 +441,7 @@ box-shadow: 2px 2px 2px 2px black;
       </script>
     </div>
 
- <!---->
+ 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     
     <a  class="navbar-brand" href=""><img style="width:auto; height:40px;" src="/static/css/images/logo.png" alt="Connectus"></a>
@@ -451,10 +460,7 @@ box-shadow: 2px 2px 2px 2px black;
           <a class="nav-link" href="/registrations/signup.html">Sign Up</a>
         </li>
       </ul>
-      <div class="custom-control custom-switch ml-lg-2"> <!-- Added ml-lg-2 class for margin -->
-        <input type="checkbox" class="custom-control-input" id="darkModeSwitch">
-        <label class="custom-control-label" for="darkModeSwitch">Dark Mode</label>
-      </div>
+      
       
     </div>
   </nav>
@@ -468,42 +474,16 @@ box-shadow: 2px 2px 2px 2px black;
     <a href="/create_post/">Post Timeline</a> 
   </div>
 
-<div>
-<div class="container">
-  <h1></h1>
-  <p></p>
-</div>
-
-      
-          <section>
-            <div class="container">
-              <div class="section">
-                <div class="row">
-                <h2>Welcome to your ConnectUS<h2>
-                  <div class="col">
-                  <h5> At ConnectUs, our mission is to create a vibrant online community where people can come together, connect, and build meaningful relationships through shared experiences. Whether you're bonding over thrilling games, engaging with diverse content, or forging new friendships on social media, ConnectUs is your ultimate destination for fun and connection. Join us to discover new connections, share memorable moments, and celebrate the power of friendship in an inclusive and welcoming environment. Together, let's explore the endless possibilities of connection and create lasting bonds that enrich our lives.
-                  </h5><br>   
-                  <h5>Trending topics and popular discussions across the platform.</h5>  
-                  <h5>Recommendations for groups, events, and content based on user preferences and activity.</h5>  
-                  <h5>Tools for organizing and managing events, polls, and fundraisers.</h5>  
-                  <h5>Integration with other social media platforms for seamless sharing and cross-platform connectivity.</h5>  
-                </div>
-              </section>
-          
-</div>
-
-
 
 {% extends "base.html" %}
+
 {% block content %}
 
+<div>
 <div class="log-out">  
   <a href="{% url 'base:logout' %}" style="position: fixed; color: white; background-image: linear-gradient(to right, #0c0c14, black); text-decoration: none; padding: 10px 20px; border-radius: 5px; transition: color 0.3s, background-color 0.3s;" onmouseover="this.style.color='red'; this.style.backgroundColor='white'" onmouseout="this.style.color='white'; this.style.backgroundColor='transparent'">User Out</a>
 </div>
 
-<div class="gradient-text">
-  <h4>Welcome, {{ user.username }} <img style="width:20px; height;20px; margin-top: -10px;" src="/static/css/images/verified.png" alt="icon"> </h4>  <!--base.html nakakonek-->
-</div>
 
 
 <!--
@@ -532,9 +512,7 @@ box-shadow: 2px 2px 2px 2px black;
   </div>
 </div>
 </div>
-
 <script>
-  
   if (window.innerWidth > 768) {
     showAlert();
 }
@@ -632,17 +610,14 @@ document.addEventListener('mouseup', () => {
   }
 });
 </script>
-
-</head>
-<body>
-
-
 {% endblock content %}
 
 </body>
-
-
 </html>
 
 
 
+
+
+
+ 

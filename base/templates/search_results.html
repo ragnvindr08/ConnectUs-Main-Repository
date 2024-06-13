@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <style>
+        /* Your CSS styles here */
+        /* Example styles for search results */
+        .post {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results</h1>
+
+    <form method="GET" action="{% url 'search_posts' %}">
+        <input type="text" name="q" placeholder="Search News..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <hr>
+
+    {% if posts %}
+        {% for post in posts %}
+            <div class="post">
+                <p>Post by {{ post.user.username }}</p>
+                <p>{{ post.post }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post Image">
+                {% endif %}
+                <p>Created at: {{ post.created_at }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No results found for "{{ query }}"</p>
+    {% endif %}
+</body>
+</html>

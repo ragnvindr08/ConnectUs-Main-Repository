@@ -8,10 +8,9 @@
   <link href="/images/icon1.png" rel="icon">
   <link rel="icon" href="/images/icon1.png" type="image/png">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
     <style>
 
-   body {
+  body {
  background-color: #efefef; /* Changed to white */
  padding-top: 80px;
  margin:60px;
@@ -56,10 +55,9 @@
   }
   .gradient-text {
   position: absolute;
-  top: 20%;
-  left: 25%;
-  transform: translate(-50%, -50%);
-  background-image: url("/static/css/images/blue.jpeg");
+  top: 15%;
+  left: 65%;
+  transform: translate(-50%, -50%); <!--background-image: url"/static/css/images/blue.jpeg"-->
   color: transparent;
   -webkit-background-clip: text;
   background-clip: text;
@@ -100,12 +98,70 @@
     background-position: 100% 0; /* Adjust background movement direction as needed */
   }
 }
-      </style>
+
+#post-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+/* Style for individual posts */
+.post {
+  width: 300px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style for the post image */
+.post img {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+/* Style for the comments section */
+.comments {
+  margin-top: 10px;
+}
+
+/* Style for the comment form */
+.comment-form {
+  margin-top: 10px;
+}
+
+.comment-form input[type="text"] {
+  width: calc(100% - 80px);
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.comment-form button {
+  width: 70px;
+  padding: 5px;
+  margin-left: 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.comment-form button:hover {
+  background-color: #0056b3;
+}
+
+</style>
     </head>
 <body>  
 
  
     {% block content %}
+
+    
     {% endblock content %}
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

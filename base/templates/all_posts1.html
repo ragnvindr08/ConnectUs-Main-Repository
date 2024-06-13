@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Posts</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+
+    body {
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #2b2b2b; /* Changed to white */
+        padding-top: 80px;
+        
+       
+        font-size: 20px; /* Increased text to enable scrolling */
+        padding: 0px 10px;
+        transition: background-color 0.5s, color 0.5s; /* Added transition for background and text color */
+      }
+      
+      .navbar-dark .navbar-nav .nav-link {
+        color: white; /* Changed link color to black */
+        transition: color 0.5s; /* Added transition for link color */
+      }
+      
+      body.dark-mode {
+        background-color: white; /* Dark background */
+        color: #ffffff; /* White text color */
+      }
+        .sidenav {
+          margin-top:50px;
+          height: 100%;
+          width: 160px;
+          position: fixed;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          background-color: #111;
+          overflow-x: hidden;
+          padding-top: 20px;
+         }
+        
+        .sidenav a {
+          padding: 6px 8px 6px 16px;
+          text-decoration: none;
+          font-size: 15px;
+          color: #818181;
+          display: block;
+        }
+        
+        .sidenav a:hover {
+          color: #f1f1f1;
+        }
+
+        .form-group textarea {
+          max-height: 100px; /* Set a maximum height for the textarea */
+      }
+      .posts {
+        width: 100%;
+        max-width: 2100px; /* Adjust as needed for your design */
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    
+    .posts ul {
+        list-style-type: none; /* Remove list decoration */
+        padding: 0;
+        margin: 0;
+    }
+    
+    .posts{
+        background: linear-gradient(90deg, rgba(114,121,125,0.4780287114845938) 8%, rgba(170,101,185,0.4472163865546218) 50%, rgba(89,239,255,0.4724264705882353) 100%);
+        margin: 10px 0; /* Adjust margin to separate list items */
+        padding: 10px;
+        border-radius: 15px;
+        margin-bottom:50px;
+        
+    }
+    
+    .posts p {
+        margin: 20px 0;
+        color: white;
+        font-size:80%;
+    }
+    
+    .posts img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin-top: 10px;
+        border-radius: 10px;
+        box-shadow: 2px 2px 2px 2px black;
+    }
+   
+  
+.message-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    right: 1%; /* Adjust as needed */
+    top: 50%; /* Adjust as needed */
+    transform: translateY(-50%);
+    margin-top: 6px;
+    cursor: move; /* Set cursor to move */
+  }
+  .message-container.dragging {
+    cursor: grabbing;
+  }
+  .message-toggle {
+    background-color: black;
+    color: #fff;
+    padding:8px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .message-toggle.active {
+    background-color: #dc3545;
+  }
+  
+  #message-icon {
+    margin-right: 5px;
+  }
+  
+  #message-text {
+    display: inline-block;
+    
+    
+  }
+  
+  .message-box {
+    background: #2b2b2b;
+    margin-top:20px;
+    padding: 55px;
+    position: fixed;
+    top: 50%;
+    left: -300px;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+    box-shadow: 2px 2px 2px 2px black;
+  }
+  
+  .container {
+    margin-top:30%;
+  }
+     
+</style>    
+<body>
+    
+
+    
+
+        <div class="posts">
+          <h5 style="color: white;">Timeline</h5>
+        {% for post in posts %}
+           
+                <p style="color:#90e0ef">@{{ post.user.username }}</p>
+                <p>{{ post.post }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}">
+                {% endif %}
+                <p>Posted at: {{ post.created_at }}</p>
+                <br>
+            <hr style="background:white;">
+           
+        {% endfor %}
+  
+  <!--
+            <div class="message-container">
+              <div class="message-toggle" onclick="toggleMessage()"><img style="width:auto; height:50px;" src="/static/css/images/message.png">
+                <span id="message-icon"></span>
+                <span id="message-text"><h1></span>
+              </div>
+              <div class="message-box" style="display: none;">
+                <div id="message-content">
+                   
+                </div>
+                <h5 style=" margin-top:10px; "><a style="text-decoration:none ;"href="/messages/">Go to Chat</a></h5>
+                </div>
+              </div>
+            </div>
+              </div>
+            </div>
+            </div>
+-->
+
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      const darkModeSwitch = document.getElementById('darkModeSwitch');
+      darkModeSwitch.addEventListener('change', () => {
+        document.body.classList.toggle('dark-mode');
+      });
+
+      function toggleMessage() {
+        var messageBox = document.querySelector('.message-box');
+        var messageContent = document.getElementById('message-content');
+      
+        if (messageBox.style.display === 'none' || messageBox.style.display === '') {
+          messageBox.style.display = 'block';
+          messageContent.innerHTML = ''; // Clear previous content
+          // Load content into the message box
+          loadMessageContent();
+        } else {
+          messageBox.style.display = 'none';
+        }
+      
+        var messageToggle = document.querySelector('.message-toggle');
+        messageToggle.classList.toggle('active');
+      }
+      
+      // Function to load message content
+      function loadMessageContent() {
+        // Here, you can load content into the message box dynamically
+        // For example, you can use AJAX to fetch content from a server
+        // Example:
+        var messageContent = document.getElementById('message-content');
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+              // On successful response, update the message content
+              messageContent.innerHTML = xhr.responseText;
+      
+              // Set the desired size for the message content
+              messageContent.style.width = '120%'; // Set width
+              messageContent.style.height = '50%'; // Set height
+             
+            } else {
+              // Handle errors
+              messageContent.innerHTML = 'Failed to load content';
+            }
+          }
+        };
+      
+        
+        xhr.open('GET', '/homemessages/', true);
+        xhr.send();
+      }
+    </script> 
+    
+</html>

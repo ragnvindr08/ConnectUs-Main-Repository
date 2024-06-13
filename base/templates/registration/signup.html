@@ -1,4 +1,4 @@
-<body style="background: radial-gradient(circle, rgba(43,37,39,1) 49%, rgba(18,18,17,1) 100%);">
+<body style="background: radial-gradient(circle at 10% 20%, rgb(0, 0, 0) 0%, rgb(64, 64, 64) 90.2%);">
   <img class="logo" src="/static/css/images/logo.png" alt="Connectus">
   <style>
     .logo {
@@ -10,25 +10,43 @@
       width: auto;
       height: 45px;
     }
-    .shadow-wrap{
+    .shadow-wrap {
       margin-top:180px;
       padding: auto;
       margin-left:-83px;
-
     }
-
   </style>
-{% extends "base.html" %}
-{% block content %}
-<div class="shadow-wrap">
- <div class="form-wrap">
-  <h3 style="color:white;">Signup </h3>
-<form method="POST">
- {% csrf_token %}
- {{form}}
- <button type="submit">Submit</button>
-</form>
-<a class="signup-link" href="{% url "base:login" %}">Login</a>
-</div>
-</div>
-{% endblock content %}
+  {% extends "base.html" %}
+  {% block content %}
+  <div class="shadow-wrap">
+    <div class="form-wrap">
+      <h3 style="color:white;">Signup</h3>
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+      </form>
+      <a class="signup-link" href="{% url "base:login" %}">Login</a>
+    </div>
+  </div>
+  {% if success %}
+    <script>
+      alert('Registration successful!');
+    </script>
+  {% endif %}
+  {% if form.errors %}
+    <script>
+      let errorMessage = '';
+      {% for field in form %}
+        {% for error in field.errors %}
+          errorMessage += '{{ error }}\n';
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        errorMessage += '{{ error }}\n';
+      {% endfor %}
+      alert(errorMessage);
+    </script>
+  {% endif %}
+  {% endblock content %}
+</body>
